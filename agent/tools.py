@@ -1,3 +1,4 @@
+import re
 import json
 from typing import Any, Dict
 
@@ -43,3 +44,34 @@ def kb_lookup(q: str) -> str:
         return "No entry found."
     except Exception as e:
         return f"KB error: {e}"
+
+# agent/tools.py
+_CURRENCY_RATES = {
+    ("USD", "EUR"): 0.91,
+    ("EUR", "USD"): 1.1,
+    ("USD", "JPY"): 150.0,
+}
+
+def currency_converter(data) -> str:
+    # amount: float, from_currency: str, to_currency: str
+    amount = data["amount"]
+    from_currency = data["from_currency"]
+    to_currency = data["to_currency"]
+    from_currency = from_currency.upper()
+    to_currency = to_currency.upper()
+    rate = _CURRENCY_RATES.get((from_currency, to_currency))
+    if not rate:
+        return f"No conversion rate for {from_currency} → {to_currency}"
+    return f"{amount * rate:.2f} {to_currency}"
+
+def convert_average(expression: str, to_currency: str) -> str:
+    """
+    Example: 'average of 10 and 20 USD'
+    """
+    match = re.search(r"average of (\d+(?:\.\d+)?) and (\d+(?:\.\d+)?) (\w+)", expression.lower())
+    if not match:
+        return "Could not parse expression"
+
+    a, b, from_currency = match.groups()
+    avg = (float(a) + float(b)) / 2
+    return currency_converter(avg, from_currency, to_currency)

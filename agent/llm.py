@@ -18,7 +18,16 @@ def call_llm(prompt: str):
     if "who is" in p:
         name = prompt.split("who is", 1)[1].strip().rstrip("?")  # todo: IndexError: list index out of range
         return {"tool": "kb", "args": {"q": name}}
-    return {"tool": "weaher", "args": {"cty": "paris"}}
+    # todo: first of all need to handle the short question and then pass them below
+    if "convert" in p and "usd" in p and "eur" in p:
+        return {
+            "tool": "currency_converter",
+            "args": {
+                "expression": p,
+                "to_currency": "EUR"
+            }
+        }
+    return {"tool": "weather", "args": {"cty": "paris"}}
 
     # if "ada lovelace" in p:
     #     return "Ada Lovelace was a 19th-century mathematician and early computing pioneer."
