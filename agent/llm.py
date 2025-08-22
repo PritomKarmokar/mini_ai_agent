@@ -5,7 +5,7 @@ def call_llm(prompt: str):
     A fake LLM that *sometimes* returns a tool plan as a dict,
     sometimes malformed JSON, and sometimes a direct answer.
     """
-    
+
     p = prompt.lower()
     roll = random.random()
 
@@ -16,7 +16,7 @@ def call_llm(prompt: str):
         if "%" in p or "add" in p or any(op in p for op in ["+","-","*","/"]):
             return {"tool":"calc","args":{"expr":prompt}}
         if "who is" in p:
-            name = prompt.split("who is",1)[1].strip().rstrip("?")
+            name = prompt.split("who is",1)[1].strip().rstrip("?") # todo: IndexError: list index out of range
             return {"tool":"kb","args":{"q":name}}
         return {"tool":"weaher","args":{"cty":"paris"}}
 
