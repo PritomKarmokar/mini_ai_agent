@@ -1,6 +1,8 @@
 import json
 from typing import Any, Dict
 
+from agent.weather_client import weather_client
+
 
 def _percent_of(expr: str):
     try:
@@ -28,8 +30,8 @@ _TEMPS = {
 
 def temp(city: str):
     c = (city or "").strip()
-    return _TEMPS.get(c, "20")
-
+    # return _TEMPS.get(c, "20")
+    return weather_client.fetch_weather(c)
 
 def kb_lookup(q: str) -> str:
     try:

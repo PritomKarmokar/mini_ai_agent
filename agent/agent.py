@@ -3,7 +3,7 @@ from . import tools
 
 def answer(q: str):
     plan = call_llm(q)
-
+    # {"tool": "weather", "args": {"city": city}}
     if plan and isinstance(plan, dict) and "tool" in plan:
         if plan["tool"] == "calc":
             return tools.evaluate(plan["args"]["expr"])
