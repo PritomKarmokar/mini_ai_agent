@@ -14,6 +14,6 @@ def answer(q: str):
         elif plan["tool"] == "kb":
             return tools.kb_lookup(plan["args"]["q"])
         elif plan["tool"] == "currency_converter":
-            return tools.currency_converter(plan["args"]["q"])
+            return tools.currency_converter(plan["args"]["exp"])
 
     return str(plan)

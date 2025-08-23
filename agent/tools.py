@@ -54,11 +54,15 @@ _CURRENCY_RATES = {
 
 def currency_converter(data) -> str:
     # amount: float, from_currency: str, to_currency: str
-    amount = data["amount"]
-    from_currency = data["from_currency"]
-    to_currency = data["to_currency"]
-    from_currency = from_currency.upper()
-    to_currency = to_currency.upper()
+    data = data.lower().split(" ")
+    print(data)
+    try:
+        amount = float(data[1])
+        from_currency = data[2].upper()
+        to_currency = data[4].upper()
+        print("from_currency", from_currency, "to_currency", to_currency)
+    except (IndexError, ValueError):
+        return "Invalid format. Use: '10 USD to EUR'"
     rate = _CURRENCY_RATES.get((from_currency, to_currency))
     if not rate:
         return f"No conversion rate for {from_currency} → {to_currency}"
@@ -74,4 +78,5 @@ def convert_average(expression: str, to_currency: str) -> str:
 
     a, b, from_currency = match.groups()
     avg = (float(a) + float(b)) / 2
-    return currency_converter(avg, from_currency, to_currency)
+    # return currency_converter(avg, from_currency, to_currency)
+    return ""

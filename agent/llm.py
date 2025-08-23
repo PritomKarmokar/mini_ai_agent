@@ -23,7 +23,7 @@ def call_llm(prompt: str):
         return {
             "tool": "currency_converter",
             "args": {
-                "expression": p,
+                "exp": p,
                 "to_currency": "EUR"
             }
         }
