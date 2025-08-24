@@ -1,13 +1,14 @@
-import sys
-from agent.agent import answer
+from agent.orchestrator import Orchestrator
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python main.py \"your question here\"")
-        sys.exit(1)
-    q = " ".join(sys.argv[1:])
-    out = answer(q)
-    print(out)
+    orchestrator = Orchestrator()
+    print("Welcome to the AI Agent System. Type your query (or 'exit'):")
+    while True:
+        user_input = input()
+        if user_input.lower() in ["exit", "quit"]:
+            break
+        response = orchestrator.handle(user_input)
+        print("Response:", response)
 
 if __name__ == "__main__":
     main()
