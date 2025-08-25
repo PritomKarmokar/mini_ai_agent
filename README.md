@@ -8,7 +8,11 @@ python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
-
+### Create and update the configuration in `.env` file from `.env.example`
+   ```shell
+   cp .env.example .env
+   ```
+- Now edit the `.env` file for your local configuration
 ### Run
 ```bash
 python main.py
